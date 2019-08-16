@@ -1,0 +1,123 @@
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Posts on Tony 的開發隨筆</title>
+        <link>/posts/</link>
+        <description>Recent content in Posts on Tony 的開發隨筆</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en-us</language>
+        <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
+        <lastBuildDate>Fri, 16 Aug 2019 16:13:11 +0800</lastBuildDate>
+        <atom:link href="/posts/index.xml" rel="self" type="application/rss+xml" />
+        
+        <item>
+            <title>Net面試題</title>
+            <link>/posts/2019/08/net%E9%9D%A2%E8%A9%A6%E9%A1%8C/</link>
+            <pubDate>Fri, 16 Aug 2019 16:13:11 +0800</pubDate>
+            
+            <guid>/posts/2019/08/net%E9%9D%A2%E8%A9%A6%E9%A1%8C/</guid>
+            <description>.Net interview String &amp;amp; string  string 為 String 的別名，兩者在Compile上並無差別 繼承時，必須使用別名  Stack &amp;amp; Heap  stack 為靜態配置，不同執行緒使用不同stack heap 為動態配置，不同執行緒使用相同heap  Reference type &amp;amp; Value type  String is Reference type Value type use stack only Reference type use Stack as variable address but point to object in Heap  ref &amp;amp; out  ref 需要在執行前初始化參數(給值) out 是在程式結束前需要初始化參數(給值) ref 可以看成 y 指向 i，所以y的操作就都是在改i
+int i = 5; Func(ref i); //i = 10 public void Func (int y){ y = 10 }   reference type with ref stack &amp;amp; heap pic</description>
+            <content type="html"><![CDATA[
+
+<h1 id="net-interview">.Net interview</h1>
+
+<h2 id="string-string">String &amp; string</h2>
+
+<ul>
+<li>string 為 String 的別名，兩者在Compile上並無差別</li>
+<li>繼承時，必須使用別名</li>
+</ul>
+
+<h2 id="stack-heap">Stack &amp; Heap</h2>
+
+<ul>
+<li>stack 為靜態配置，不同執行緒使用不同stack</li>
+<li>heap 為動態配置，不同執行緒使用相同heap</li>
+</ul>
+
+<h2 id="reference-type-value-type">Reference type &amp; Value type</h2>
+
+<ul>
+<li>String is Reference type</li>
+<li>Value type use stack only</li>
+<li>Reference type use <strong>Stack</strong> as variable address but point to object in <strong>Heap</strong></li>
+</ul>
+
+<h2 id="ref-out">ref &amp; out</h2>
+
+<ul>
+<li>ref 需要在執行前初始化參數(給值)</li>
+<li>out 是在程式結束前需要初始化參數(給值)</li>
+
+<li><p>ref 可以看成 y 指向 i，所以y的操作就都是在改i</p>
+
+<pre><code>int i = 5;
+Func(ref i);
+//i = 10
+
+public void Func (int y){
+y = 10
+}
+</code></pre></li>
+</ul>
+
+<p><a href="https://dotblogs.com.tw/jackeir/2015/06/22/151626">reference type with ref</a>
+<a href="https://dotblogs.com.tw/jackeir/2015/06/22/151626">stack &amp; heap pic</a></p>
+
+<h2 id="class-struct">Class &amp; Struct</h2>
+
+<ul>
+<li>struct is value type</li>
+<li>class is reference type</li>
+<li>struct 不可有無參數的ctor，struct不須new()</li>
+</ul>
+
+<h2 id="float-double-decimal">Float, Double &amp; Decimal</h2>
+
+<ul>
+<li>Float - 7 digits (32 bit)</li>
+<li>Double - 15-16 digits (64 bit)</li>
+<li>Decimal - 28-29 significant digits (128 bit)</li>
+</ul>
+
+<h2 id="ienumerable-iqueryable">IEnumerable &amp; IQueryable</h2>
+
+<ul>
+<li>IQueryable(T) 是給資料庫廠商實作的查詢(Linq to Entities)，用來產生資料庫語法，會在資料庫進行操作</li>
+<li>IEnumerable(T) 是操作記憶體的查詢(Linq to Objects)
+<a href="https://dotblogs.azurewebsites.net/kevin_date/2017/09/20/104713">參考</a></li>
+</ul>
+
+<h2 id="delegate-event">delegate &amp; event</h2>
+
+<ul>
+<li>Event += 在Event被觸發時會呼叫的委派function</li>
+
+<li><p>委派function，參數及回傳必須與delegate相同</p>
+
+<pre><code>public class Calculator{
+public delegate void Sum();
+public event Sum SumEvent;
+public void Trigger(){
+    SumEvent();
+}
+}
+
+public static void Main(string[] args){
+Calculator c = new Calculator();
+c.SumEvent += new Calculator.Sum(()=&gt;Console.WriteLine(&quot;1 + 1 = 2&quot;));
+c.SumEvent += new Calculator.Sum(()=&gt;Console.WriteLine(&quot;2 + 2 = 4&quot;));
+c.SumEvent += new Calculator.Sum(()=&gt;Console.WriteLine(&quot;4 + 4 = 8&quot;));
+c.Trigger();
+}
+</code></pre></li>
+</ul>
+
+<h2 id="visual-studio-code">Visual Studio Code</h2>
+
+<p><a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf">Hotkey</a></p>
+]]></content>
+        </item>
+        
+    </channel>
+</rss>

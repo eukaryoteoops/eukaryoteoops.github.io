@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tony 的開發隨筆</title>
-    <link>/</link>
-    <description>Recent content on Tony 的開發隨筆</description>
+    <title>.NetCore on Tony 的開發隨筆</title>
+    <link>/tags/.netcore/</link>
+    <description>Recent content in .NetCore on Tony 的開發隨筆</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&lt;a href=&#34;https://creativecommons.org/licenses/by-nc/4.0/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;CC BY-NC 4.0&lt;/a&gt;</copyright>
     <lastBuildDate>Fri, 16 Aug 2019 16:13:11 +0800</lastBuildDate>
     
-	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/.netcore/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
@@ -20,17 +20,6 @@
       <guid>/posts/2019/08/net%E9%9D%A2%E8%A9%A6%E9%A1%8C/</guid>
       <description>.Net interview String &amp;amp; string  string 為 String 的別名，兩者在Compile上並無差別 繼承時，必須使用別名  Stack &amp;amp; Heap  stack 為靜態配置，不同執行緒使用不同stack heap 為動態配置，不同執行緒使用相同heap  Reference type &amp;amp; Value type  String is Reference type Value type use stack only Reference type use Stack as variable address but point to object in Heap  ref &amp;amp; out  ref 需要在執行前初始化參數(給值) out 是在程式結束前需要初始化參數(給值) ref 可以看成 y 指向 i，所以y的操作就都是在改i
 int i = 5; Func(ref i); //i = 10 public void Func (int y){ y = 10 }   reference type with ref stack &amp;amp; heap pic</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Wed, 09 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>/about/</guid>
-      <description>Hugo is the world’s fastest framework for building websites. It is written in Go.
-It makes use of a variety of open source projects including:
- https://github.com/russross/blackfriday https://github.com/alecthomas/chroma https://github.com/muesli/smartcrop https://github.com/spf13/cobra https://github.com/spf13/viper  Learn more and contribute on GitHub.</description>
     </item>
     
   </channel>
