@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author"
+    content="Tony Chang ">
+<meta name="description"
+    content="Swagger 是讓你方便建立符合API規範的說明文件工具，以下將介紹如何在.Net Core的專案下使用Swagger
+透過Nuget安裝 Swashbuckle.AspNetCore 在 Startup 加入設定 public void ConfigureServices(IServiceCollection services) { services.AddSwaggerGen(c =&amp;gt; { //Tag是拿來分類actions，預設的tag是controller name，可以在此修改想要的分類方式 c.TagActionsBy((apiDesc) =&amp;gt; $&amp;quot;{apiDesc.ActionDescriptor.RouteValues[&amp;quot;controller&amp;quot;]}_{apiDesc.HttpMethod}&amp;quot;); //此排序方式非字面上可以排序每個Actions，因為Swagger的文件架構會以path當作分組的依據，此排序只能生效在同一組path裡面 c.OrderActionsBy(api =&amp;gt; api.HttpMethod); //忽略含有[Obsolete]的Actions c.IgnoreObsoleteActions(); //忽略含有[Obsolete]的Properties c.IgnoreObsoleteProperties(); //將Enum轉為文字顯示於介面上，而非數字。 c.DescribeAllEnumsAsStrings(); //若專案內有不同namespace相同名稱的class，此方法可顯示絕對路徑的class name c.CustomSchemaIds(type =&amp;gt; type.FullName); //加入xml，完善API的說明 c.IncludeXmlComments(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, &amp;quot;Api.xml&amp;quot;)); //可以自訂義operation的一些參數，像是在有[Authorized]的operation上加上填寫token的欄位 c.OperationFilter&amp;lt;SwaggerAuthFilter&amp;gt;(); c.SwaggerDoc(&amp;quot;v1&amp;quot;, new Info { Title = &amp;quot;Project&amp;quot;, Version = &amp;quot;v1&amp;quot; }); }); } public void Configure(IApplicationBuilder app, IHostingEnvironment env) { app.UseSwagger(); app.UseSwaggerUI(opt =&amp;gt; { opt.SwaggerEndpoint(&amp;quot;/swagger/v1/swagger.json&amp;quot;, &amp;quot;v1.0.0&amp;quot;); //摺疊所有分類 opt.DocExpansion(DocExpansion.None); //顯示此要求花費的時長 opt." />
+<meta name="keywords" content="" />
+<meta name="robots" content="noodp" />
+<link rel="canonical" href="/posts/2019/08/netcore_swagger/" />
+
+
+<title>
+    
+    [.NetCore] Swagger設定 :: Tony 的開發隨筆 
+    
+</title>
+
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.1/css/flag-icon.min.css" rel="stylesheet"
+    type="text/css">
+
+
+
+<link rel="stylesheet" href="/main.min.0d47b4686e972122bd29f0c1e3dd024a2d541cd8b1b543622520822ea6f4238a.css">
+
+
+
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="manifest" href="/site.webmanifest">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#252627">
+<link rel="shortcut icon" href="/favicon.ico">
+<meta name="theme-color" content="#252627"><meta itemprop="name" content="[.NetCore] Swagger設定">
+<meta itemprop="description" content="Swagger 是讓你方便建立符合API規範的說明文件工具，以下將介紹如何在.Net Core的專案下使用Swagger
+透過Nuget安裝 Swashbuckle.AspNetCore 在 Startup 加入設定 public void ConfigureServices(IServiceCollection services) { services.AddSwaggerGen(c =&gt; { //Tag是拿來分類actions，預設的tag是controller name，可以在此修改想要的分類方式 c.TagActionsBy((apiDesc) =&gt; $&quot;{apiDesc.ActionDescriptor.RouteValues[&quot;controller&quot;]}_{apiDesc.HttpMethod}&quot;); //此排序方式非字面上可以排序每個Actions，因為Swagger的文件架構會以path當作分組的依據，此排序只能生效在同一組path裡面 c.OrderActionsBy(api =&gt; api.HttpMethod); //忽略含有[Obsolete]的Actions c.IgnoreObsoleteActions(); //忽略含有[Obsolete]的Properties c.IgnoreObsoleteProperties(); //將Enum轉為文字顯示於介面上，而非數字。 c.DescribeAllEnumsAsStrings(); //若專案內有不同namespace相同名稱的class，此方法可顯示絕對路徑的class name c.CustomSchemaIds(type =&gt; type.FullName); //加入xml，完善API的說明 c.IncludeXmlComments(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, &quot;Api.xml&quot;)); //可以自訂義operation的一些參數，像是在有[Authorized]的operation上加上填寫token的欄位 c.OperationFilter&lt;SwaggerAuthFilter&gt;(); c.SwaggerDoc(&quot;v1&quot;, new Info { Title = &quot;Project&quot;, Version = &quot;v1&quot; }); }); } public void Configure(IApplicationBuilder app, IHostingEnvironment env) { app.UseSwagger(); app.UseSwaggerUI(opt =&gt; { opt.SwaggerEndpoint(&quot;/swagger/v1/swagger.json&quot;, &quot;v1.0.0&quot;); //摺疊所有分類 opt.DocExpansion(DocExpansion.None); //顯示此要求花費的時長 opt.">
+
+
+<meta itemprop="datePublished" content="2019-08-17T08:33:56&#43;08:00" />
+<meta itemprop="dateModified" content="2019-08-17T08:33:56&#43;08:00" />
+<meta itemprop="wordCount" content="91">
+
+
+
+<meta itemprop="keywords" content=".NetCore," />
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="[.NetCore] Swagger設定"/>
+<meta name="twitter:description" content="Swagger 是讓你方便建立符合API規範的說明文件工具，以下將介紹如何在.Net Core的專案下使用Swagger
+透過Nuget安裝 Swashbuckle.AspNetCore 在 Startup 加入設定 public void ConfigureServices(IServiceCollection services) { services.AddSwaggerGen(c =&gt; { //Tag是拿來分類actions，預設的tag是controller name，可以在此修改想要的分類方式 c.TagActionsBy((apiDesc) =&gt; $&quot;{apiDesc.ActionDescriptor.RouteValues[&quot;controller&quot;]}_{apiDesc.HttpMethod}&quot;); //此排序方式非字面上可以排序每個Actions，因為Swagger的文件架構會以path當作分組的依據，此排序只能生效在同一組path裡面 c.OrderActionsBy(api =&gt; api.HttpMethod); //忽略含有[Obsolete]的Actions c.IgnoreObsoleteActions(); //忽略含有[Obsolete]的Properties c.IgnoreObsoleteProperties(); //將Enum轉為文字顯示於介面上，而非數字。 c.DescribeAllEnumsAsStrings(); //若專案內有不同namespace相同名稱的class，此方法可顯示絕對路徑的class name c.CustomSchemaIds(type =&gt; type.FullName); //加入xml，完善API的說明 c.IncludeXmlComments(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, &quot;Api.xml&quot;)); //可以自訂義operation的一些參數，像是在有[Authorized]的operation上加上填寫token的欄位 c.OperationFilter&lt;SwaggerAuthFilter&gt;(); c.SwaggerDoc(&quot;v1&quot;, new Info { Title = &quot;Project&quot;, Version = &quot;v1&quot; }); }); } public void Configure(IApplicationBuilder app, IHostingEnvironment env) { app.UseSwagger(); app.UseSwaggerUI(opt =&gt; { opt.SwaggerEndpoint(&quot;/swagger/v1/swagger.json&quot;, &quot;v1.0.0&quot;); //摺疊所有分類 opt.DocExpansion(DocExpansion.None); //顯示此要求花費的時長 opt."/>
+
+
+
+
+<meta property="article:published_time" content="2019-08-17 08:33:56 &#43;0800 CST" />
+
+
+
+
+
+
+
+    </head>
+
+    <body class="dark-theme">
+        <div class="container">
+            <header class="header">
+    <span class="header__inner">
+        <a href="/" style="text-decoration: none;">
+    <div class="logo">
+        
+            <span class="logo__mark">></span>
+            <span class="logo__text">$ cd ~</span>
+            <span class="logo__cursor"></span>
+        
+    </div>
+</a>
+
+
+        <span class="header__right">
+            
+                <nav class="menu">
+    <ul class="menu__inner"><li><a href="/about/">About</a></li><li><a href="/posts/">Blog</a></li><li><a href="/tags/">Tag</a></li>
+    </ul>
+</nav>
+
+                <span class="menu-trigger">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <path d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+                    </svg>
+                </span>
+            
+
+            <span class="theme-toggle"><svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+</span>
+        </span>
+    </span>
+</header>
+
+
+            <div class="content">
+                
+    <main class="post">
+
+        <div class="post-info">
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>One minute
+
+            
+
+            </p>
+        </div>
+
+        <article>
+            <h1 class="post-title"><a href="/posts/2019/08/netcore_swagger/">[.NetCore] Swagger設定</a></h1>
+                <hr />
+                <aside id="toc">
+                <div class="toc-title">Table of Contents</div>
+                    <nav id="TableOfContents">
+<ul>
+<li>
+<ul>
+<li><a href="#透過nuget安裝-swashbuckle-aspnetcore">透過Nuget安裝 Swashbuckle.AspNetCore</a></li>
+<li><a href="#在-startup-加入設定">在 Startup 加入設定</a></li>
+<li><a href="#讓專案建置時產出xml檔案">讓專案建置時產出XML檔案</a></li>
+<li><a href="#使用swagger">使用Swagger</a></li>
+</ul></li>
+</ul>
+</nav>
+                </aside>
+                <hr />
+
+            
+
+            <div class="post-content">
+                
+
+<p>Swagger 是讓你方便建立符合API規範的說明文件工具，以下將介紹如何在.Net Core的專案下使用Swagger</p>
+
+<h2 id="透過nuget安裝-swashbuckle-aspnetcore">透過Nuget安裝 Swashbuckle.AspNetCore</h2>
+
+<h2 id="在-startup-加入設定">在 Startup 加入設定</h2>
+
+<pre><code class="language-C#">public void ConfigureServices(IServiceCollection services)
+{
+    services.AddSwaggerGen(c =&gt;
+    {
+        //Tag是拿來分類actions，預設的tag是controller name，可以在此修改想要的分類方式
+        c.TagActionsBy((apiDesc) =&gt; $&quot;{apiDesc.ActionDescriptor.RouteValues[&quot;controller&quot;]}_{apiDesc.HttpMethod}&quot;);
+        //此排序方式非字面上可以排序每個Actions，因為Swagger的文件架構會以path當作分組的依據，此排序只能生效在同一組path裡面
+        c.OrderActionsBy(api =&gt; api.HttpMethod);                                                                        
+        //忽略含有[Obsolete]的Actions
+        c.IgnoreObsoleteActions();                                                                                      
+        //忽略含有[Obsolete]的Properties
+        c.IgnoreObsoleteProperties();           
+        //將Enum轉為文字顯示於介面上，而非數字。                                                                       
+        c.DescribeAllEnumsAsStrings();                   
+        //若專案內有不同namespace相同名稱的class，此方法可顯示絕對路徑的class name                                                             
+        c.CustomSchemaIds(type =&gt; type.FullName);                                                   
+        //加入xml，完善API的說明          
+        c.IncludeXmlComments(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, &quot;Api.xml&quot;));     
+        //可以自訂義operation的一些參數，像是在有[Authorized]的operation上加上填寫token的欄位                     
+        c.OperationFilter&lt;SwaggerAuthFilter&gt;();
+        c.SwaggerDoc(&quot;v1&quot;, new Info { Title = &quot;Project&quot;, Version = &quot;v1&quot; });
+    });
+}
+
+public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(opt =&gt;
+    {
+        opt.SwaggerEndpoint(&quot;/swagger/v1/swagger.json&quot;, &quot;v1.0.0&quot;);
+        //摺疊所有分類
+        opt.DocExpansion(DocExpansion.None);
+        //顯示此要求花費的時長
+        opt.DisplayRequestDuration();
+        //顯示Action Name
+        opt.DisplayOperationId();
+    });
+}
+</code></pre>
+
+<h2 id="讓專案建置時產出xml檔案">讓專案建置時產出XML檔案</h2>
+
+<ul>
+<li>開啟專案屬性 &gt; 建置標籤 (若要在其他環境下也使用Swagger，組態方面要選取<strong>所有組態</strong>，以免部屬到其他環境缺少XML而報錯)</li>
+<li>底下輸出區塊，XML文件檔案打勾</li>
+<li>填入與上一步驟 <code>c.IncludeXmlComments()</code>相同的XML檔案名稱</li>
+<li>此時建置後，會在專案目錄下產出XML檔案，接著在XML檔案內容 &gt; 複製到輸出目錄，選取永遠複製</li>
+</ul>
+
+<h2 id="使用swagger">使用Swagger</h2>
+
+<p>設定完畢之後，可以試試偵錯專案，在Url輸入 <code>http://{yourDebugDomain:port}/swagger</code> ，就可以看到Swagger的介面囉</p>
+
+            </div>
+        </article>
+
+        <hr />
+
+        <div class="post-info">
+                <p>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg><span class="tag"><a href="/tags/.netcore">.NetCore</a></span>
+                </p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>91 Words</p>
+
+            <p><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>2019-08-17 08:33 &#43;0800</p>
+        </div>
+
+        
+            <div class="pagination">
+                <div class="pagination__title">
+                    <span class="pagination__title-h"></span>
+                    <hr />
+                </div>
+
+                <div class="pagination__buttons">
+                    
+
+                    
+                        <span class="button next">
+                            <a href="/posts/2019/08/netcore_startup/">
+                                <span class="button__text">Net面試題</span>
+                                <span class="button__icon">→</span>
+                            </a>
+                        </span>
+                    
+                </div>
+            </div>
+        
+
+        
+    </main>
+
+            </div>
+
+            
+                <footer class="footer">
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>&copy; 2019</span>
+            
+                <span><a href="/">Tony Chang</a></span>
+            
+            <span><a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a></span>
+            <span> <a href="/posts/index.xml" target="_blank" title="rss"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-rss"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></span>
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+
+        </div>
+    </div>
+    <div class="footer__inner">
+        <div class="footer__content">
+            <span>Powered by <a href="http://gohugo.io">Hugo</a></span>
+            <span>Made with &#10084; by <a href="https://github.com/rhazdon">rhazdon</a></span>
+        </div>
+    </div>
+</footer>
+
+            
+        </div>
+
+        
+
+
+
+
+<script type="text/javascript" src="/bundle.min.4c3fb12a087ceed4a52cb5d57068a9795c7069617a01ca70f788052ad66e1791779e6c72686e1dc0ca13dc03b0203204b6566bb0dd1ee80de2b7ff4d8fe53db2.js" integrity="sha512-TD&#43;xKgh87tSlLLXVcGipeVxwaWF6Acpw94gFKtZuF5F3nmxyaG4dwMoT3AOwIDIEtlZrsN0e6A3it/9Nj&#43;U9sg=="></script>
+
+
+
+    </body>
+</html>
