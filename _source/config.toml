@@ -1,0 +1,51 @@
+baseurl = "/"
+languageCode = "en-us"
+Title   = "Tony 的開發隨筆"
+theme = "hello-friend-ng"
+copyright = '<a href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank" rel="noopener">CC BY-NC 4.0</a>'
+enableRobotsTXT = true
+enableEmoji     = true
+
+[author]
+  name = "Tony Chang"
+[permalinks]
+  posts = "/posts/:year/:month/:filename/"
+[taxonomies]
+  tag = "tags"
+  
+[params]
+  dateform        = "Jan 2, 2006"
+  dateformShort   = "Jan 2"
+  dateformNum     = "2006-01-02"
+  dateformNumTime = "2006-01-02 15:04 -0700"
+  defaultTheme = "dark"
+  homeSubtitle = "Be yourself, everyone else is already taken."
+  contentTypeName = "posts"
+
+[[params.social]]
+    name = "github"
+    url  = "https://github.com/eukaryoteoops"
+[[params.social]]
+    name = "linkedin"
+    url  = "https://www.linkedin.com/in/%E5%B3%BB%E8%B1%AA-%E5%BC%B5-577690124/"
+[[params.social]]
+    name = "email"
+    url  = "mailto:a25332482@hotmail.com"
+[params.logo]
+    logoText     = "$ cd ~"
+    logoHomeLink = "/"
+
+# And you can even create generic menu
+[menu]
+  [[menu.main]]
+    identifier = "about"
+    name       = "About"
+    url        = "about/"
+  [[menu.main]]
+    identifier = "blog"
+    name       = "Blog"
+    url        = "posts/"
+[[menu.main]]
+    identifier = "tag"
+    name       = "Tag"
+    url        = "tags/"
