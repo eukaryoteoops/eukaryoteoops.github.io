@@ -2,9 +2,7 @@
 title: "[.NetCore] Swagger設定"
 date: 2019-08-17T08:33:56+08:00
 tags:
-    - .NetCore
-thumbnailImagePosition: left
-thumbnailImage: //d1u9biwaxjngwg.cloudfront.net/chinese-test-post/vintage-140.jpg
+    - NetCore
 ---
 
 

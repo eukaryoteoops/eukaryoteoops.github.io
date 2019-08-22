@@ -2,9 +2,7 @@
 title: "Net面試題"
 date: 2019-08-16T16:13:11+08:00
 tags:
-  - .NetCore
-thumbnailImagePosition: left
-thumbnailImage: //d1u9biwaxjngwg.cloudfront.net/chinese-test-post/vintage-140.jpg
+  - NetCore
 ---
 
 紀錄一些面試常見的問題

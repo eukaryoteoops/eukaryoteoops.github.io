@@ -35,9 +35,9 @@
   
       <div id="cloned-navbar-menu" class="navbar-menu is-static">
         <div class="navbar-end">
-          <a href="{{ "about" | relURL }}" class="navbar-item is-secondary">
+          <!-- <a href="{{ "about" | relURL }}" class="navbar-item is-secondary">
             About Me
-          </a>
+          </a> -->
           {{- range .Site.Sections -}}
             {{- if not (eq .Title "singles") -}}
             {{- $secCount := len .Sections -}}
