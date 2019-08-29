@@ -122,14 +122,35 @@
                                         <div class="columns"><div class="column is-4">
     <div class="box">
       <figure class="image is-3by2">
+        <a href="/post/netcore_bitwise/"><img src="/images/default_summary_hu396158e3aa62c6bf5c9813ecce01402d_3518025_600x0_resize_q75_box.jpg" alt=""></a>
+      </figure>
+      <h3 class="title is-5 summary-title">
+        [.NetCore] 位元運算子
+      </h3>
+      <p class="summary-summary"> complement operator [~]  會反轉位元
+int i = 9; int j = ~i; //j = -10   Left-shift operator [&amp;lt;&amp;lt;]  將每個位元向左移指定的位元數，後方補0
+int i = 9; //1001 int j = i &amp;lt;&amp;lt; 2 // j = 36 -&amp;gt; 100100  實際上等於是做了乘法，每左移一個位元，就會乘2 9 * 2 * 2 = 36
+  Right-shift operator [&amp;gt;&amp;gt;]  將每個位元向右移指定的位元數，前方補0
+int i = 9; //1001 int j = i &amp;gt;&amp;gt; 2 // j = 2 -&amp;gt; 0010  實際上等於是做了除法，每左移一個位元，就會除2，取商數，捨餘數 9 % 2 % 2 = 2
+  Logical AND operator [&amp;amp;]    first unit second unit AND result     1 1 1   1 0 0   0 1 0   0 0 0    int a = 9; a &amp;amp;= 1; //a = a &amp;amp; 1; //a = 1001 &amp;amp; 0001 = 0001 = 1(int)  Logical OR operator [|]    first unit second unit OR result     1 1 1   1 0 1   0 1 1   0 0 0    int a = 9; a |= 2; //a = a | 2; //a = 1001 | 0010 = 1011 = 11(int)  Logical exclusive OR operator [^]    first unit second unit XOR result     1 1 0   1 0 1   0 1 1   0 0 0    int a = 9; a ^= 3; //a = a ^ 3; //a = 1001 ^ 0011 = 1010 = 10(int)  ref  msdn blog  </p> 
+      <div class="action has-text-right">
+        <a href="/post/netcore_bitwise/" class="button is-primary">
+                Read More
+            </a>
+      </div>
+    </div>
+  </div><div class="column is-4">
+    <div class="box">
+      <figure class="image is-3by2">
         <a href="/post/netcore_swagger/"><img src="/images/default_summary_hu396158e3aa62c6bf5c9813ecce01402d_3518025_600x0_resize_q75_box.jpg" alt=""></a>
       </figure>
       <h3 class="title is-5 summary-title">
         [.NetCore] Swagger設定
       </h3>
       <p class="summary-summary">Swagger 是讓你方便建立符合API規範的說明文件工具，以下將介紹如何在.Net Core的專案下使用Swagger
-透過Nuget安裝 Swashbuckle.AspNetCore 在 Startup 加入設定 public void ConfigureServices(IServiceCollection services) { services.AddSwaggerGen(c =&amp;gt; { //Tag是拿來分類actions，預設的tag是controller name，可以在此修改想要的分類方式 c.TagActionsBy((apiDesc) =&amp;gt; $&amp;quot;{apiDesc.ActionDescriptor.RouteValues[&amp;quot;controller&amp;quot;]}_{apiDesc.HttpMethod}&amp;quot;); //此排序方式非字面上可以排序每個Actions，因為Swagger的文件架構會以path當作分組的依據，此排序只能生效在同一組path裡面 c.OrderActionsBy(api =&amp;gt; api.HttpMethod); //忽略含有[Obsolete]的Actions c.IgnoreObsoleteActions(); //忽略含有[Obsolete]的Properties c.IgnoreObsoleteProperties(); //將Enum轉為文字顯示於介面上，而非數字。 c.DescribeAllEnumsAsStrings(); //若專案內有不同namespace相同名稱的class，此方法可顯示絕對路徑的class name c.CustomSchemaIds(type =&amp;gt; type.FullName); //加入xml，完善API的說明 c.IncludeXmlComments(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, &amp;quot;Api.xml&amp;quot;)); //可以自訂義operation的一些參數，像是在有[Authorized]的operation上加上填寫token的欄位 c.OperationFilter&amp;lt;SwaggerAuthFilter&amp;gt;(); c.SwaggerDoc(&amp;quot;v1&amp;quot;, new Info { Title = &amp;quot;Project&amp;quot;, Version = &amp;quot;v1&amp;quot; }); }); } public void Configure(IApplicationBuilder app, IHostingEnvironment env) { app.UseSwagger(); app.UseSwaggerUI(opt =&amp;gt; { opt.SwaggerEndpoint(&amp;quot;/swagger/v1/swagger.json&amp;quot;, &amp;quot;v1.0.0&amp;quot;); //摺疊所有分類 opt.DocExpansion(DocExpansion.None); //顯示此要求花費的時長 opt.DisplayRequestDuration(); //顯示Action Name opt.DisplayOperationId(); }); }  讓專案建置時產出XML檔案  開啟專案屬性 &amp;gt; 建置標籤 (若要在其他環境下也使用Swagger，組態方面要選取所有組態，以免部屬到其他環境缺少XML而報錯) 底下輸出區塊，XML文件檔案打勾 填入與上一步驟 c.IncludeXmlComments()相同的XML檔案名稱 此時建置後，會在專案目錄下產出XML檔案，接著在XML檔案內容 &amp;gt; 複製到輸出目錄，選取永遠複製  使用Swagger 設定完畢之後，可以試試偵錯專案，在Url輸入 http://{yourDebugDomain:port}/swagger ，就可以看到Swagger的介面囉
-</p> 
+安裝 Swashbuckle.AspNetCore 透過Nuget，搜尋Swashbuckle.AspNetCore，安裝至專案
+在 Startup 加入設定 public void ConfigureServices(IServiceCollection services) { services.AddSwaggerGen(c =&amp;gt; { //Tag是拿來分類actions，預設的tag是controller name，可以在此修改想要的分類方式 c.TagActionsBy((apiDesc) =&amp;gt; $&amp;quot;{apiDesc.ActionDescriptor.RouteValues[&amp;quot;controller&amp;quot;]}_{apiDesc.HttpMethod}&amp;quot;); //此排序方式非字面上可以排序每個Actions，因為Swagger的文件架構會以path當作分組的依據，此排序只能生效在同一組path裡面 c.OrderActionsBy(api =&amp;gt; api.HttpMethod); //忽略含有[Obsolete]的Actions c.IgnoreObsoleteActions(); //忽略含有[Obsolete]的Properties c.IgnoreObsoleteProperties(); //將Enum轉為文字顯示於介面上，而非數字。 c.DescribeAllEnumsAsStrings(); //若專案內有不同namespace相同名稱的class，此方法可顯示絕對路徑的class name c.CustomSchemaIds(type =&amp;gt; type.FullName); //加入xml，完善API的說明 c.IncludeXmlComments(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, &amp;quot;Api.xml&amp;quot;)); //可以自訂義operation的一些參數，像是在有[Authorized]的operation上加上填寫token的欄位 c.OperationFilter&amp;lt;SwaggerAuthFilter&amp;gt;(); c.SwaggerDoc(&amp;quot;v1&amp;quot;, new Info { Title = &amp;quot;Project&amp;quot;, Version = &amp;quot;v1&amp;quot; }); }); } public void Configure(IApplicationBuilder app, IHostingEnvironment env) { app.UseSwagger(); app.UseSwaggerUI(opt =&amp;gt; { opt.SwaggerEndpoint(&amp;quot;/swagger/v1/swagger.json&amp;quot;, &amp;quot;v1.0.0&amp;quot;); //摺疊所有分類 opt.DocExpansion(DocExpansion.None); //顯示此要求花費的時長 opt.DisplayRequestDuration(); //顯示Action Name opt.DisplayOperationId(); }); }  讓專案建置時產出XML檔案  開啟專案屬性 &amp;gt; 建置標籤 (若要在其他環境下也使用Swagger，組態方面要選取所有組態，以免部屬到其他環境缺少XML而報錯) 底下輸出區塊，XML文件檔案打勾 填入與上一步驟 c.IncludeXmlComments()相同的XML檔案名稱 此時建置後，會在專案目錄下產出XML檔案，接著在XML檔案內容 &amp;gt; 複製到輸出目錄，選取永遠複製  使用Swagger 設定完畢之後，可以試試偵錯專案，在Url輸入 http://{yourDebugDomain:port}/swagger ，就可以看到Swagger的介面囉
+除錯經驗  確定同一個httpmethod，不會有相同的route，(像是同一個Controller有兩個[HttpGet(&amp;quot;&amp;quot;)])，否則Swagger在解析API的時候會報錯 若是用AddMvcCore()而非AddMvc()來註冊服務，記得加上AddApiExplorer()，否則Swagger將無法解析API </p> 
       <div class="action has-text-right">
         <a href="/post/netcore_swagger/" class="button is-primary">
                 Read More
@@ -263,7 +284,7 @@ public class Calculator{ public delegate void Sum(); public event Sum SumEvent; 
                   <tr>
                     <td class=""><span class="icon"><i class="fa fa-cube"></i></span>NetCore</td>
                     <td class="has-text-right" >
-                        <div class="tag-number">2</div>
+                        <div class="tag-number">3</div>
                       
                     </td>
                     

@@ -120,7 +120,9 @@
         <section class="section content has-text-justified">
           <p>Swagger 是讓你方便建立符合API規範的說明文件工具，以下將介紹如何在.Net Core的專案下使用Swagger</p>
 
-<h2 id="透過nuget安裝-swashbuckle-aspnetcore">透過Nuget安裝 Swashbuckle.AspNetCore</h2>
+<h2 id="安裝-swashbuckle-aspnetcore">安裝 Swashbuckle.AspNetCore</h2>
+
+<p>透過Nuget，搜尋<code>Swashbuckle.AspNetCore</code>，安裝至專案</p>
 
 <h2 id="在-startup-加入設定">在 Startup 加入設定</h2>
 
@@ -176,6 +178,13 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 <h2 id="使用swagger">使用Swagger</h2>
 
 <p>設定完畢之後，可以試試偵錯專案，在Url輸入 <code>http://{yourDebugDomain:port}/swagger</code> ，就可以看到Swagger的介面囉</p>
+
+<h2 id="除錯經驗">除錯經驗</h2>
+
+<ul>
+<li>確定同一個httpmethod，不會有相同的route，(像是同一個Controller有兩個<code>[HttpGet(&quot;&quot;)]</code>)，否則Swagger在解析API的時候會報錯</li>
+<li>若是用AddMvcCore()而非AddMvc()來註冊服務，記得加上AddApiExplorer()，否則Swagger將無法解析API</li>
+</ul>
         </section>
       </div>
     </div>
@@ -284,7 +293,7 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
                   <tr>
                     <td class=""><span class="icon"><i class="fa fa-cube"></i></span>NetCore</td>
                     <td class="has-text-right" >
-                        <div class="tag-number">2</div>
+                        <div class="tag-number">3</div>
                       
                     </td>
                     

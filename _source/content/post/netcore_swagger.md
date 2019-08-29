@@ -8,7 +8,8 @@ tags:
 
 Swagger 是讓你方便建立符合API規範的說明文件工具，以下將介紹如何在.Net Core的專案下使用Swagger
 <!--more-->
-## 透過Nuget安裝 Swashbuckle.AspNetCore
+## 安裝 Swashbuckle.AspNetCore
+透過Nuget，搜尋`Swashbuckle.AspNetCore`，安裝至專案
 
 ## 在 Startup 加入設定
 ```C#
@@ -60,3 +61,7 @@ public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 
 ## 使用Swagger
 設定完畢之後，可以試試偵錯專案，在Url輸入 `http://{yourDebugDomain:port}/swagger` ，就可以看到Swagger的介面囉
+
+## 除錯經驗
++ 確定同一個httpmethod，不會有相同的route，(像是同一個Controller有兩個`[HttpGet("")]`)，否則Swagger在解析API的時候會報錯
++ 若是用AddMvcCore()而非AddMvc()來註冊服務，記得加上AddApiExplorer()，否則Swagger將無法解析API
