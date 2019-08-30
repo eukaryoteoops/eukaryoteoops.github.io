@@ -123,11 +123,28 @@
 <h2 id="complement-operator">complement operator [~]</h2>
 
 <ul>
-<li><p>會反轉位元</p>
+<li>會反轉位元</li>
+<li>負數的位元表示法是用二補數的方式，舉個例子
 
-<pre><code class="language-C#">int i = 9;
-int j = ~i;
-//j = -10
+<ol>
+<li>6 &gt; 0110</li>
+<li>反轉位元 &gt; 1001</li>
+<li>加上1成為負數 &gt; 1010</li>
+<li>1010 就是 -6 的表示法</li>
+</ol></li>
+
+<li><p>為啥 1010 不是 10 呢 &gt; 偷懶了，以int32來說他的完整表示法是 1111 1111 1111 1111 1111 1111 1111 1010</p>
+
+<pre><code class="language-C#">int i = 5;  // 0101
+int j = ~i; // 1010 &lt; 這貨就是-6
+//j = -6
+</code></pre></li>
+
+<li><p>若是uint就沒有負數了</p>
+
+<pre><code class="language-C#">uint i = 5;     //0000 0000 0000 0000 0000 0000 0000 0101
+uint j = ~i;    //1111 1111 1111 1111 1111 1111 1111 1010
+//j = 4294967290
 </code></pre></li>
 </ul>
 
@@ -156,7 +173,7 @@ int j = i &gt;&gt; 2
 </code></pre>
 
 <p>實際上等於是做了除法，每左移一個位元，就會除2，取商數，捨餘數
-<code>9 % 2 % 2 = 2</code></p></li>
+<code>Math.Abs(9/2/2) = 2</code></p></li>
 </ul>
 
 <h2 id="logical-and-operator">Logical AND operator [&amp;]</h2>
@@ -293,6 +310,7 @@ a ^= 3; //a = a ^ 3;
 <ul>
 <li><a href="https://docs.microsoft.com/zh-tw/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators" target="_blank">msdn</a></li>
 <li><a href="https://dotblogs.com.tw/feegg333/2011/06/22/29525" target="_blank">blog</a></li>
+<li><a href="https://noob.tw/complements/" target="_blank">二補數</a></li>
 </ul>
 
         </section>
