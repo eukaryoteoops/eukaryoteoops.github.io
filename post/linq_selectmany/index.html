@@ -113,205 +113,70 @@
   <div class="container">
     <div class="columns">
       <div class="column is-centered-tablet-portrait">
-        <h1 class="title section-title">[.NetCore] 位元運算子</h1>
+        <h1 class="title section-title">[Linq] SelectMany</h1>
         <h5 class="subtitle is-5 is-muted"></h5>
         <div class="divider"></div>
         
         <section class="section content has-text-justified">
-          
+          <ul>
+<li><p><code>SelectMany</code>可以將序列攤平，使用到兩次foreach的情況，可以考慮用<code>SelectMany</code>來簡化寫法</p>
 
-<h2 id="complement-operator">complement operator [~]</h2>
+<pre><code>class Member
+{
+    public int KPI { get; set; }
 
-<ul>
-<li>會反轉位元</li>
-<li>負數的位元表示法是用二補數的方式，舉個例子
+    public Member(int kpi)
+    {
+        this.KPI = kpi;
+    }
+}
+
+class Leader
+{
+    public string Name { get; set; }
+
+    public List&lt;Member&gt; Members;
+
+    public Leader(string name, List&lt;Member&gt; members)
+    {
+        this.Name = name;
+
+        this.Members = members;
+    }
+}
+</code></pre></li>
+
+<li><p>假設有一個集合</p>
+
+<pre><code>List&lt;Leader&gt; leader = new List&lt;Leader&gt;{
+new Leader(&quot;leaderA&quot;, new List&lt;Member&gt;{
+    new Member(80),new Member(70)
+}),
+...
+}
+</code></pre></li>
+
+<li><pre><code>public static IEnumerable&lt;TResult&gt; SelectMany&lt;TSource,TResult&gt; (
+this IEnumerable&lt;TSource&gt; source,
+Func&lt;TSource,IEnumerable&lt;TResult&gt;&gt; selector);
+</code></pre>
+
+<pre><code>List&lt;Member&gt; members = leader.SelectMany(source =&gt; source.Members);
+</code></pre></li>
+</ul>
 
 <ol>
-<li>6 &gt; 0110</li>
-<li>反轉位元 &gt; 1001</li>
-<li>加上1成為負數 &gt; 1010</li>
-<li>1010 就是 -6 的表示法</li>
-</ol></li>
+<li><pre><code>public static IEnumerable&lt;TResult&gt; SelectMany&lt;TSource,TCollection,TResult&gt; (
+this IEnumerable&lt;TSource&gt; source,
+Func&lt;TSource,IEnumerable&lt;TCollection&gt;&gt; collectionSelector,
+Func&lt;TSource,TCollection,TResult&gt; resultSelector);
+</code></pre>
 
-<li><p>為啥 1010 不是 10 呢 &gt; 偷懶了，以int32來說他的完整表示法是 1111 1111 1111 1111 1111 1111 1111 1010</p>
-
-<pre><code class="language-C#">int i = 5;  // 0101
-int j = ~i; // 1010 &lt; 這貨就是-6
-//j = -6
+<pre><code>leader.SelectMany(source =&gt; source.Members, (source, members) =&gt; new {source.Name, members.KPI});
 </code></pre></li>
+</ol>
 
-<li><p>若是uint就沒有負數了</p>
-
-<pre><code class="language-C#">uint i = 5;     //0000 0000 0000 0000 0000 0000 0000 0101
-uint j = ~i;    //1111 1111 1111 1111 1111 1111 1111 1010
-//j = 4294967290
-</code></pre></li>
-</ul>
-
-<h2 id="left-shift-operator">Left-shift operator [&lt;&lt;]</h2>
-
-<ul>
-<li><p>將每個位元向左移指定的位元數，後方補0</p>
-
-<pre><code class="language-C#">int i = 9; //1001
-int j = i &lt;&lt; 2
-// j = 36 -&gt; 100100
-</code></pre>
-
-<p>實際上等於是做了乘法，每左移一個位元，就會乘2
-<code>9 * 2 * 2 = 36</code></p></li>
-</ul>
-
-<h2 id="right-shift-operator">Right-shift operator [&gt;&gt;]</h2>
-
-<ul>
-<li><p>將每個位元向右移指定的位元數，前方補0</p>
-
-<pre><code class="language-C#">int i = 9; //1001
-int j = i &gt;&gt; 2
-// j = 2 -&gt; 0010
-</code></pre>
-
-<p>實際上等於是做了除法，每左移一個位元，就會除2，取商數，捨餘數
-<code>Math.Abs(9/2/2) = 2</code></p></li>
-</ul>
-
-<h2 id="logical-and-operator">Logical AND operator [&amp;]</h2>
-
-<table>
-<thead>
-<tr>
-<th align="center">first unit</th>
-<th align="center">second unit</th>
-<th align="center">AND result</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-
-<tr>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-
-<tr>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-</tr>
-
-<tr>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-</tbody>
-</table>
-
-<pre><code class="language-C#">int a = 9;
-a &amp;= 1; //a = a &amp; 1;
-//a = 1001 &amp; 0001 = 0001 = 1(int)
-</code></pre>
-
-<h2 id="logical-or-operator">Logical OR operator [|]</h2>
-
-<table>
-<thead>
-<tr>
-<th align="center">first unit</th>
-<th align="center">second unit</th>
-<th align="center">OR result</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-
-<tr>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-</tr>
-
-<tr>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-
-<tr>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-</tbody>
-</table>
-
-<pre><code class="language-C#">int a = 9;
-a |= 2; //a = a | 2;
-//a = 1001 | 0010 = 1011 = 11(int)
-</code></pre>
-
-<h2 id="logical-exclusive-or-operator">Logical exclusive OR operator [^]</h2>
-
-<table>
-<thead>
-<tr>
-<th align="center">first unit</th>
-<th align="center">second unit</th>
-<th align="center">XOR result</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-</tr>
-
-<tr>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-</tr>
-
-<tr>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-
-<tr>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-</tbody>
-</table>
-
-<pre><code class="language-C#">int a = 9;
-a ^= 3; //a = a ^ 3;
-//a = 1001 ^ 0011 = 1010 = 10(int)
-</code></pre>
-
-<h2 id="ref">ref</h2>
-
-<ul>
-<li><a href="https://docs.microsoft.com/zh-tw/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators" target="_blank">msdn</a></li>
-<li><a href="https://dotblogs.com.tw/feegg333/2011/06/22/29525" target="_blank">blog</a></li>
-<li><a href="https://noob.tw/complements/" target="_blank">二補數</a></li>
-</ul>
+<p><a href="https://docs.microsoft.com/zh-hk/dotnet/api/system.linq.enumerable.selectmany?view=netframework-4.8" target="_blank">msdn</a></p>
 
         </section>
       </div>

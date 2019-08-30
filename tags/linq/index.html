@@ -110,219 +110,62 @@
     </div>
   </nav>
 <section class="section is-medium">
-  <div class="container">
-    <div class="columns">
-      <div class="column is-centered-tablet-portrait">
-        <h1 class="title section-title">[.NetCore] 位元運算子</h1>
-        <h5 class="subtitle is-5 is-muted"></h5>
-        <div class="divider"></div>
-        
-        <section class="section content has-text-justified">
-          
-
-<h2 id="complement-operator">complement operator [~]</h2>
-
-<ul>
-<li>會反轉位元</li>
-<li>負數的位元表示法是用二補數的方式，舉個例子
-
-<ol>
-<li>6 &gt; 0110</li>
-<li>反轉位元 &gt; 1001</li>
-<li>加上1成為負數 &gt; 1010</li>
-<li>1010 就是 -6 的表示法</li>
-</ol></li>
-
-<li><p>為啥 1010 不是 10 呢 &gt; 偷懶了，以int32來說他的完整表示法是 1111 1111 1111 1111 1111 1111 1111 1010</p>
-
-<pre><code class="language-C#">int i = 5;  // 0101
-int j = ~i; // 1010 &lt; 這貨就是-6
-//j = -6
-</code></pre></li>
-
-<li><p>若是uint就沒有負數了</p>
-
-<pre><code class="language-C#">uint i = 5;     //0000 0000 0000 0000 0000 0000 0000 0101
-uint j = ~i;    //1111 1111 1111 1111 1111 1111 1111 1010
-//j = 4294967290
-</code></pre></li>
-</ul>
-
-<h2 id="left-shift-operator">Left-shift operator [&lt;&lt;]</h2>
-
-<ul>
-<li><p>將每個位元向左移指定的位元數，後方補0</p>
-
-<pre><code class="language-C#">int i = 9; //1001
-int j = i &lt;&lt; 2
-// j = 36 -&gt; 100100
-</code></pre>
-
-<p>實際上等於是做了乘法，每左移一個位元，就會乘2
-<code>9 * 2 * 2 = 36</code></p></li>
-</ul>
-
-<h2 id="right-shift-operator">Right-shift operator [&gt;&gt;]</h2>
-
-<ul>
-<li><p>將每個位元向右移指定的位元數，前方補0</p>
-
-<pre><code class="language-C#">int i = 9; //1001
-int j = i &gt;&gt; 2
-// j = 2 -&gt; 0010
-</code></pre>
-
-<p>實際上等於是做了除法，每左移一個位元，就會除2，取商數，捨餘數
-<code>Math.Abs(9/2/2) = 2</code></p></li>
-</ul>
-
-<h2 id="logical-and-operator">Logical AND operator [&amp;]</h2>
-
-<table>
-<thead>
-<tr>
-<th align="center">first unit</th>
-<th align="center">second unit</th>
-<th align="center">AND result</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-
-<tr>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-
-<tr>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-</tr>
-
-<tr>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-</tbody>
-</table>
-
-<pre><code class="language-C#">int a = 9;
-a &amp;= 1; //a = a &amp; 1;
-//a = 1001 &amp; 0001 = 0001 = 1(int)
-</code></pre>
-
-<h2 id="logical-or-operator">Logical OR operator [|]</h2>
-
-<table>
-<thead>
-<tr>
-<th align="center">first unit</th>
-<th align="center">second unit</th>
-<th align="center">OR result</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-
-<tr>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-</tr>
-
-<tr>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-
-<tr>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-</tbody>
-</table>
-
-<pre><code class="language-C#">int a = 9;
-a |= 2; //a = a | 2;
-//a = 1001 | 0010 = 1011 = 11(int)
-</code></pre>
-
-<h2 id="logical-exclusive-or-operator">Logical exclusive OR operator [^]</h2>
-
-<table>
-<thead>
-<tr>
-<th align="center">first unit</th>
-<th align="center">second unit</th>
-<th align="center">XOR result</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td align="center">1</td>
-<td align="center">1</td>
-<td align="center">0</td>
-</tr>
-
-<tr>
-<td align="center">1</td>
-<td align="center">0</td>
-<td align="center">1</td>
-</tr>
-
-<tr>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-
-<tr>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-</tbody>
-</table>
-
-<pre><code class="language-C#">int a = 9;
-a ^= 3; //a = a ^ 3;
-//a = 1001 ^ 0011 = 1010 = 10(int)
-</code></pre>
-
-<h2 id="ref">ref</h2>
-
-<ul>
-<li><a href="https://docs.microsoft.com/zh-tw/dotnet/csharp/language-reference/operators/bitwise-and-shift-operators" target="_blank">msdn</a></li>
-<li><a href="https://dotblogs.com.tw/feegg333/2011/06/22/29525" target="_blank">blog</a></li>
-<li><a href="https://noob.tw/complements/" target="_blank">二補數</a></li>
-</ul>
-
-        </section>
+        <div class="container">
+          <div class="columns">
+            <div class="column is-centered-tablet-portrait">
+              <h1 class="title section-title">Linq</h1>
+              <h5 class="subtitle is-5 is-muted"></h5>
+              <div class="divider"></div>        
+              <div class="section is-medium">
+                <div class="container"><div class="columns"></div>
+                          <div class="columns"><div class="column is-4">
+    <div class="box">
+      <figure class="image is-3by2">
+        <a href="/post/linq_aggregate/"><img src="/images/default_summary_hu396158e3aa62c6bf5c9813ecce01402d_3518025_600x0_resize_q75_box.jpg" alt=""></a>
+      </figure>
+      <h3 class="title is-5 summary-title">
+        [Linq] Aggregate
+      </h3>
+      <p class="summary-summary"> 無初始值的累加函式
+public static TSource Aggregate&amp;lt;TSource&amp;gt; ( this IEnumerable&amp;lt;TSource&amp;gt; source, Func&amp;lt;TSource,TSource,TSource&amp;gt; func);  例如Sum()這個函式，就可以用Aggregate來實作
+List&amp;lt;int&amp;gt; list = new List&amp;lt;int&amp;gt;{1, 2, 3}; var result = list.Aggregate((aggregatedSoFar, nextElement) =&amp;gt; nextElement &#43; aggregatedSoFar); // 1. (0, 1) =&amp;gt; 0 &#43; 1 // 2. (1, 2) =&amp;gt; 2 &#43; 1 // 3. (3, 3) =&amp;gt; 3 &#43; 3 //result = 6  每次的nextElement &#43; aggregatedSoFar都會丟回aggregatedSoFar，進行下一次的運算
+ 有初始值的累加函式
+public static TAccumulate Aggregate&amp;lt;TSource,TAccumulate&amp;gt; ( this IEnumerable&amp;lt;TSource&amp;gt; source, TAccumulate seed, Func&amp;lt;TAccumulate,TSource,TAccumulate&amp;gt; func);  與*無初始值的累加函式*不同的是，會將初始值放進aggregatedSoFar作為初始的運算
+List&amp;lt;int&amp;gt; list = new List&amp;lt;int&amp;gt;{1, 2, 3}; var result = list.Aggregate(20, (aggregatedSoFar, nextElement) =&amp;gt; nextElement &#43; aggregatedSoFar); // 1. (20, 1) =&amp;gt; 1 &#43; 20 // 2. (21, 2) =&amp;gt; 2 &#43; 21 // 3. (23, 3) =&amp;gt; 3 &#43; 23 //result = 26  有初始值的累加函式，且多使用一個 Func作為最終結果的處理
+public static TResult Aggregate&amp;lt;TSource,TAccumulate,TResult&amp;gt; ( this IEnumerable&amp;lt;TSource&amp;gt; source, TAccumulate seed, Func&amp;lt;TAccumulate,TSource,TAccumulate&amp;gt; func, Func&amp;lt;TAccumulate,TResult&amp;gt; resultSelector);  將最後的結果，做處理之後才回傳
+List&amp;lt;int&amp;gt; list = new List&amp;lt;int&amp;gt;{1, 2, 3}; var result = list.Aggregate(20, (aggregatedSoFar, nextElement) =&amp;gt; nextElement &#43; aggregatedSoFar, final =&amp;gt; final &#43; 10); // 1. (20, 1) =&amp;gt; 1 &#43; 20 // 2. (21, 2) =&amp;gt; 2 &#43; 21 // 3. (23, 3) =&amp;gt; 3 &#43; 23 // final. 26 =&amp;gt; 26 &#43; 10 //result = 36   msdn
+</p> 
+      <div class="action has-text-right">
+        <a href="/post/linq_aggregate/" class="button is-primary">
+                Read More
+            </a>
       </div>
     </div>
-  </div>  
-  <div class="container">
-    <div class="columns">
-      <div class="column has-text-right is-family-monospace is-centered-tablet-portrait">
-        Last modified:29 August 2019</div>
+  </div><div class="column is-4">
+    <div class="box">
+      <figure class="image is-3by2">
+        <a href="/post/linq_selectmany/"><img src="/images/default_summary_hu396158e3aa62c6bf5c9813ecce01402d_3518025_600x0_resize_q75_box.jpg" alt=""></a>
+      </figure>
+      <h3 class="title is-5 summary-title">
+        [Linq] SelectMany
+      </h3>
+      <p class="summary-summary"> SelectMany可以將序列攤平，使用到兩次foreach的情況，可以考慮用SelectMany來簡化寫法
+class Member { public int KPI { get; set; } public Member(int kpi) { this.KPI = kpi; } } class Leader { public string Name { get; set; } public List&amp;lt;Member&amp;gt; Members; public Leader(string name, List&amp;lt;Member&amp;gt; members) { this.Name = name; this.Members = members; } }  假設有一個集合
+List&amp;lt;Leader&amp;gt; leader = new List&amp;lt;Leader&amp;gt;{ new Leader(&amp;quot;leaderA&amp;quot;, new List&amp;lt;Member&amp;gt;{ new Member(80),new Member(70) }), ... }  public static IEnumerable&amp;lt;TResult&amp;gt; SelectMany&amp;lt;TSource,TResult&amp;gt; ( this IEnumerable&amp;lt;TSource&amp;gt; source, Func&amp;lt;TSource,IEnumerable&amp;lt;TResult&amp;gt;&amp;gt; selector);  List&amp;lt;Member&amp;gt; members = leader.SelectMany(source =&amp;gt; source.Members);    public static IEnumerable&amp;lt;TResult&amp;gt; SelectMany&amp;lt;TSource,TCollection,TResult&amp;gt; ( this IEnumerable&amp;lt;TSource&amp;gt; source, Func&amp;lt;TSource,IEnumerable&amp;lt;TCollection&amp;gt;&amp;gt; collectionSelector, Func&amp;lt;TSource,TCollection,TResult&amp;gt; resultSelector);  leader.SelectMany(source =&amp;gt; source.Members, (source, members) =&amp;gt; new {source.Name, members.KPI});   msdn
+</p> 
+      <div class="action has-text-right">
+        <a href="/post/linq_selectmany/" class="button is-primary">
+                Read More
+            </a>
+      </div>
     </div>
-  </div></section><footer class="footer footer-dark">
+  </div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </section><footer class="footer footer-dark">
   <div class="container">
     <div class="columns">
       <div class="column">
